@@ -4,33 +4,45 @@ const Moralis = require("moralis/node");
 
 const serverUrl = process.env.SERVER_URL;
 const appId = process.env.APP_ID;
-const moralisSecret = process.env.MORALIS_SECRET;
+const masterKey = process.env.MASTER_KEY;
 
 async function getCollectionLogs() {
-  // await Moralis.start({ serverUrl, appId, moralisSecret });
+  await Moralis.start({ serverUrl, appId, masterKey });
 
-  // const ABI = {
-  //   "anonymous": false,
-  //   "inputs": [
-  //     { "indexed": true, "name": "from", "type": "address" },
-  //     { "indexed": true, "name": "to", "type": "address" },
-  //     { "indexed": false, "name": "value", "type": "uint256" },
-  //   ],
-  //   "name": "Transfer",
-  //   "type": "event",
-  // };
+  const ABI = {
+    anonymous: false,
+    inputs: [
+      { internalType: "uint256", name: "_conditionId", type: "uint256" },
+      { internalType: "address", name: "_claimer", type: "address" },
+      { internalType: "uint256", name: "_quantity", type: "uint256" },
+      { internalType: "address", name: "_currency", type: "address" },
+      {
+        internalType: "uint256",
+        name: "_pricePerToken",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "verifyMaxQuantityPerTransaction",
+        type: "bool",
+      },
+    ],
+    name: "verifyClaim",
+    type: "event",
+  };
 
-  // const options = {
-  //   chain: "eth",
-  //   address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-  //   topic:
-  //     "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-  //   limit: "3",
-  //   abi: ABI,
-  // };
-  // const events = await Moralis.Web3API.native.getContractEvents(options);
+  const options = {
+    chainId: "43114",
+    address: "0x6d04e3fD90d1cb2Fa15dffb54d522a6C749Db382",
+    topic: "ApprovalForAll(address, address, bool)",
+    limit: "3",
+    abi: ABI,
+  };
 
-  console.log(appId);
+  const events = await Moralis.Web3API.native.getContractEvents(options);
+
+  console.log(events);
 }
+
 
 getCollectionLogs();
