@@ -16,16 +16,8 @@ async function getCollectionLogs() {
       { internalType: "address", name: "_claimer", type: "address" },
       { internalType: "uint256", name: "_quantity", type: "uint256" },
       { internalType: "address", name: "_currency", type: "address" },
-      {
-        internalType: "uint256",
-        name: "_pricePerToken",
-        type: "uint256",
-      },
-      {
-        internalType: "bool",
-        name: "verifyMaxQuantityPerTransaction",
-        type: "bool",
-      },
+      { internalType: "uint256", name: "_pricePerToken", type: "uint256"},
+      { internalType: "bool", name: "verifyMaxQuantityPerTransaction", type: "bool", },
     ],
     name: "verifyClaim",
     type: "event",
@@ -34,8 +26,8 @@ async function getCollectionLogs() {
   const options = {
     chainId: "43114",
     address: "0x6d04e3fD90d1cb2Fa15dffb54d522a6C749Db382",
-    topic: "ApprovalForAll(address, address, bool)",
-    limit: "3",
+    topic: "VerifyClaim(uint256, address, uint256, address, uint256, bool)",
+    limit: "100",
     abi: ABI,
   };
 
